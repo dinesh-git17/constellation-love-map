@@ -4,9 +4,20 @@ import { Calendar, Heart, MapPin, Sparkles } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
 type Star = { x: number; y: number; size: number; opacity: number };
+
+type Memory = {
+  id: number;
+  constellation: string;
+  date: string;
+  location: string;
+  memory: string;
+  photo: string;
+  stars: { x: number; y: number; size: number }[];
+};
+
 const ConstellationLoveMap = () => {
   const [currentScene, setCurrentScene] = useState(0);
-  const [showMemory, setShowMemory] = useState(null);
+  const [showMemory, setShowMemory] = useState<Memory | null>(null);
   const [stars, setStars] = useState<Star[]>([]);
   const [viewedCount, setViewedCount] = useState(0);
   const [showLoveLetter, setShowLoveLetter] = useState(false);
@@ -19,6 +30,7 @@ const ConstellationLoveMap = () => {
   const [boxOpened, setBoxOpened] = useState(false);
   const [showCard, setShowCard] = useState(false);
   const typewriterRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const typewriterIndexRef = useRef(0);
 
 
   const memories = [
@@ -121,34 +133,39 @@ With all my love ✨💕`;
   }, [currentScene, memories.length]);
 
   useEffect(() => {
-    if (showLoveLetter && !isTyping) {
-      setIsTyping(true);
-      let index = 0;
-      
-      const typeWriter = () => {
-        if (index < fullLetterText.length) {
-          setLetterText(fullLetterText.slice(0, index + 1));
-          index++;
-          typewriterRef.current = setTimeout(typeWriter, 50);
-          
-          const letterContainer = document.getElementById('letter-container');
-          if (letterContainer) {
-            letterContainer.scrollTop = letterContainer.scrollHeight;
-          }
-        } else {
-          setIsTyping(false);
+  if (showLoveLetter && !isTyping) {
+    setIsTyping(true);
+    typewriterIndexRef.current = 0;
+
+    const typeWriter = () => {
+      if (typewriterIndexRef.current < fullLetterText.length) {
+        setLetterText((prev) =>
+          fullLetterText.slice(0, typewriterIndexRef.current + 1)
+        );
+        typewriterIndexRef.current += 1;
+
+        typewriterRef.current = setTimeout(typeWriter, 50);
+
+        const letterContainer = document.getElementById("letter-container");
+        if (letterContainer) {
+          letterContainer.scrollTop = letterContainer.scrollHeight;
         }
-      };
-      
-      typeWriter();
-    }
-    
-    return () => {
-      if (typewriterRef.current) {
-        clearTimeout(typewriterRef.current);
+      } else {
+        setTimeout(() => setIsTyping(false), 300); // ← delay finish a bit to prevent race
       }
     };
-  }, [showLoveLetter, fullLetterText, isTyping]);
+
+    typeWriter();
+  }
+
+  return () => {
+    if (typewriterRef.current) {
+      clearTimeout(typewriterRef.current);
+    }
+  };
+}, [showLoveLetter, fullLetterText]);
+
+
 
   useEffect(() => {
     if (show3DScene) {
@@ -197,7 +214,8 @@ With all my love ✨💕`;
     }
   }, [showGiftBox]);
 
-  const handleConstellationClick = (memory) => {
+  const handleConstellationClick = (memory: Memory) => {
+
     setShowMemory(memory);
   };
 
