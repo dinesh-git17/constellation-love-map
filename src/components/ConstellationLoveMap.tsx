@@ -154,9 +154,9 @@ With all my love ✨💕`;
     if (show3DScene) {
       let animationId: number | undefined;
 
-      let startTime = null;
-      
-      const animateCar = (timestamp) => {
+      let startTime: number | null = null;
+    
+      const animateCar = (timestamp: number) => {
         if (!startTime) startTime = timestamp;
         const elapsed = timestamp - startTime;
         const duration = 5000;
