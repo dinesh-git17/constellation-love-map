@@ -3,10 +3,11 @@
 import { Calendar, Heart, MapPin, Sparkles } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
+type Star = { x: number; y: number; size: number; opacity: number };
 const ConstellationLoveMap = () => {
   const [currentScene, setCurrentScene] = useState(0);
   const [showMemory, setShowMemory] = useState(null);
-  const [stars, setStars] = useState([]);
+  const [stars, setStars] = useState<Star[]>([]);
   const [viewedCount, setViewedCount] = useState(0);
   const [showLoveLetter, setShowLoveLetter] = useState(false);
   const [letterText, setLetterText] = useState('');
@@ -206,8 +207,7 @@ With all my love ✨💕`;
   };
 
   return (
-    <div className="relative w-full h-screen bg-gradient-to-b from-indigo-950 via-purple-950 to-black overflow-hidden">
-      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,600;1,400&family=Dancing+Script:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet" />
+    <div className="relative w-full h-screen bg-gradient-to-b from-indigo-950 via-purple-950 to-black overflow-hidden" style={{ fontFamily: 'var(--font-playfair)' }}>
       
       <div className="absolute inset-0">
         {stars.map((star, index) => (
