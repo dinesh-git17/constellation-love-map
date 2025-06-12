@@ -152,7 +152,8 @@ With all my love ✨💕`;
 
   useEffect(() => {
     if (show3DScene) {
-      let animationId;
+      let animationId: number | undefined;
+
       let startTime = null;
       
       const animateCar = (timestamp) => {
