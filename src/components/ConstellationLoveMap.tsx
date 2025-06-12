@@ -205,21 +205,6 @@ With all my love ✨💕`;
     setShowMemory(null);
   };
 
-  const completeLetterInstantly = () => {
-    if (typewriterRef.current) {
-      clearTimeout(typewriterRef.current);
-    }
-    setIsTyping(false);
-    setLetterText(fullLetterText);
-    
-    setTimeout(() => {
-      const letterContainer = document.getElementById('letter-container');
-      if (letterContainer) {
-        letterContainer.scrollTop = letterContainer.scrollHeight;
-      }
-    }, 100);
-  };
-
   return (
     <div className="relative w-full h-screen bg-gradient-to-b from-indigo-950 via-purple-950 to-black overflow-hidden">
       <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,600;1,400&family=Dancing+Script:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet" />
