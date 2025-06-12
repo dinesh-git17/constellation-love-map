@@ -18,7 +18,8 @@ const ConstellationLoveMap = () => {
   const [showGiftBox, setShowGiftBox] = useState(false);
   const [boxOpened, setBoxOpened] = useState(false);
   const [showCard, setShowCard] = useState(false);
-  const typewriterRef = useRef(null);
+  const typewriterRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
 
   const memories = [
     {
@@ -147,7 +148,7 @@ With all my love ✨💕`;
         clearTimeout(typewriterRef.current);
       }
     };
-  }, [showLoveLetter]);
+  }, [showLoveLetter, fullLetterText, isTyping]);
 
   useEffect(() => {
     if (show3DScene) {
