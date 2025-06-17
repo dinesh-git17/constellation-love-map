@@ -114,8 +114,8 @@ With all my love ✨💕`;
     const backgroundStars = [];
     for (let i = 0; i < 150; i++) {
       backgroundStars.push({
-        x: Math.random() * 100,
-        y: Math.random() * 100,
+        x: Math.random() * 200,
+        y: Math.random() * 200,
         size: Math.random() * 1.5 + 0.5,
         opacity: Math.random() * 0.8 + 0.2
       });
@@ -164,7 +164,7 @@ With all my love ✨💕`;
     }
   };
 }, [showLoveLetter, fullLetterText]);
-
+ 
 
 
   useEffect(() => {
